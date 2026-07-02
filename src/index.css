@@ -1,0 +1,523 @@
+@import "tailwindcss";
+/* Shriftlar index.html'da <link rel="preconnect"> + <link rel="stylesheet"> orqali
+   render-blocking bo'lmagan holda ulanadi — bu yerda qayta import qilinmaydi. */
+
+:root {
+  --navy: #1e3a5f;
+  --navy-light: #2d5282;
+  --navy-dark: #152b47;
+  --accent: #3b82f6;
+  --accent-light: #60a5fa;
+  --accent-hover: #2563eb;
+  --gold: #f4c430;
+  --gold-light: #fde68a;
+  --green: #10b981;
+  --bg: #f8fafc;
+  --bg2: #f1f5f9;
+  --bg3: #e2e8f0;
+  --card: #ffffff;
+  --text1: #0f172a;
+  --text2: #475569;
+  --text3: #94a3b8;
+  --border: #e2e8f0;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow: 0 4px 16px rgba(30,58,95,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 12px 40px rgba(30,58,95,0.14), 0 4px 8px rgba(0,0,0,0.06);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --radius-lg: 20px;
+}
+
+.dark {
+  --navy: #2d5282;
+  --navy-light: #3b6cb7;
+  --navy-dark: #1a3a6b;
+  --accent: #60a5fa;
+  --accent-light: #93c5fd;
+  --accent-hover: #3b82f6;
+  --bg: #0f172a;
+  --bg2: #1e293b;
+  --bg3: #334155;
+  --card: #1e293b;
+  --text1: #f1f5f9;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --border: #334155;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow: 0 4px 16px rgba(0,0,0,0.3);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.4);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  transition: background 0.3s, color 0.2s;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 3px; }
+
+/* ── TYPOGRAPHY ── */
+.font-display { font-family: 'Playfair Display', Georgia, serif; }
+
+/* ── LAYOUT ── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* ── NAVBAR ── */
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(248,250,252,0.88);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s;
+}
+.dark .navbar {
+  background: rgba(15,23,42,0.9);
+}
+.navbar-scrolled { box-shadow: var(--shadow); }
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-weight: 600; font-size: 0.875rem; cursor: pointer;
+  border: none; border-radius: 999px; transition: all 0.2s;
+  text-decoration: none; white-space: nowrap;
+}
+.btn-primary {
+  background: var(--navy); color: #fff;
+  padding: 10px 22px;
+  box-shadow: 0 2px 8px rgba(30,58,95,0.2);
+}
+.btn-primary:hover { background: var(--navy-light); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(30,58,95,0.3); }
+
+.btn-accent {
+  background: var(--accent); color: #fff;
+  padding: 11px 24px;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.3);
+}
+.btn-accent:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(59,130,246,0.4); }
+
+.btn-ghost {
+  background: transparent; color: var(--text1);
+  padding: 10px 22px; border: 1.5px solid var(--border);
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: rgba(59,130,246,0.05); }
+
+.btn-white {
+  background: white; color: var(--navy);
+  padding: 11px 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.btn-white:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+
+/* ── CARDS ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.25s, transform 0.25s, border-color 0.2s;
+}
+.card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); border-color: rgba(59,130,246,0.2); }
+
+/* ── PILL BADGE ── */
+.pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 13px; border-radius: 999px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+  background: rgba(59,130,246,0.1); color: var(--accent);
+}
+.pill-green { background: rgba(16,185,129,0.1); color: #10b981; }
+.pill-gold { background: rgba(244,196,48,0.15); color: #b45309; }
+.pill-navy { background: rgba(30,58,95,0.08); color: var(--navy); }
+
+/* ── INPUTS ── */
+.input {
+  width: 100%; padding: 11px 16px;
+  background: var(--bg2); color: var(--text1);
+  border: 1.5px solid var(--border); border-radius: 10px;
+  font-size: 0.9rem; font-family: 'Inter', sans-serif;
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
+.input::placeholder { color: var(--text3); }
+
+/* ── SECTION ── */
+.section { padding: 80px 0; }
+.section-sm { padding: 56px 0; }
+.section-lg { padding: 100px 0; }
+
+/* ── HERO ── */
+.hero-bg {
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d5282 45%, #1e4080 100%);
+  position: relative; overflow: hidden;
+}
+.hero-bg::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(244,196,48,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── CERT CARD ── */
+.cert-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius); padding: 24px;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s, border-color 0.2s;
+}
+.cert-card:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); }
+
+/* ── DRUG CARD IMAGE ── */
+.drug-img {
+  width: 100%; aspect-ratio: 1;
+  object-fit: cover; border-radius: 10px;
+  background: var(--bg2);
+}
+.drug-img-placeholder {
+  width: 100%; aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 10px;
+  font-size: 3rem;
+}
+
+/* ── STAT NUMBER ── */
+.stat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.6rem; font-weight: 700;
+  color: var(--accent); line-height: 1;
+}
+
+/* ── FILTER TAB ── */
+.filter-tab {
+  padding: 7px 18px; border-radius: 999px;
+  font-size: 0.83rem; font-weight: 500;
+  border: 1.5px solid var(--border);
+  background: var(--card); color: var(--text2);
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.filter-tab:hover { border-color: var(--accent); color: var(--accent); }
+.filter-tab.active { background: var(--navy); color: white; border-color: var(--navy); box-shadow: 0 2px 8px rgba(30,58,95,0.2); }
+
+/* ── NAV LINK ── */
+.nav-link {
+  font-size: 0.875rem; font-weight: 500;
+  color: var(--text2); text-decoration: none;
+  position: relative; padding-bottom: 3px;
+  transition: color 0.2s;
+}
+.nav-link::after {
+  content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+  height: 2px; border-radius: 1px; background: var(--accent);
+  transform: scaleX(0); transition: transform 0.25s;
+}
+.nav-link:hover { color: var(--accent); }
+.nav-link:hover::after { transform: scaleX(1); }
+.nav-link.active { color: var(--accent); }
+.nav-link.active::after { transform: scaleX(1); }
+
+/* ── IMAGE UPLOAD ── */
+.upload-area {
+  border: 2px dashed var(--border); border-radius: var(--radius);
+  padding: 32px; text-align: center; cursor: pointer;
+  transition: all 0.2s; background: var(--bg2);
+}
+.upload-area:hover { border-color: var(--accent); background: rgba(59,130,246,0.04); }
+
+/* ── TAG ── */
+.tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.tag-blue { background: rgba(59,130,246,0.12); color: #2563eb; }
+.tag-green { background: rgba(16,185,129,0.12); color: #059669; }
+.tag-amber { background: rgba(245,158,11,0.12); color: #d97706; }
+.tag-red { background: rgba(239,68,68,0.1); color: #dc2626; }
+.tag-purple { background: rgba(139,92,246,0.12); color: #7c3aed; }
+.tag-cyan { background: rgba(6,182,212,0.12); color: #0891b2; }
+
+/* ── TOOLTIP ── */
+.tooltip-wrap { position: relative; }
+.tooltip { position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); background: var(--text1); color: var(--card); font-size: 0.72rem; padding: 5px 10px; border-radius: 6px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+.tooltip-wrap:hover .tooltip { opacity: 1; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes pulse-ring { 0% { transform: scale(0.9); opacity: 0.7; } 100% { transform: scale(1.4); opacity: 0; } }
+@keyframes shimmer { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+
+.anim-fade-up { animation: fadeUp 0.5s ease forwards; }
+.anim-float { animation: float 4s ease-in-out infinite; }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--bg2) 25%, var(--bg3) 50%, var(--bg2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .desktop-only { display: none !important; }
+  .section { padding: 56px 0; }
+  .stat-val { font-size: 2rem; }
+}
+@media (min-width: 769px) {
+  .mobile-only { display: none !important; }
+}
+
+/* ══════════════════════════════════════════════════════
+   VELTA ANIMATIONS — Dizaynga tegmasdan qo'shildi
+   ══════════════════════════════════════════════════════ */
+
+/* ── Scroll-trigger animatsiya holatlari ── */
+.v-hidden {
+  opacity: 0;
+  transform: translateY(28px);
+}
+.v-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.v-hidden-left {
+  opacity: 0;
+  transform: translateX(-32px);
+}
+.v-visible-left {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.v-hidden-right {
+  opacity: 0;
+  transform: translateX(32px);
+}
+.v-visible-right {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.v-hidden-scale {
+  opacity: 0;
+  transform: scale(0.92);
+}
+.v-visible-scale {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Kechikish sinflari ── */
+.v-delay-1 { transition-delay: 0.08s !important; }
+.v-delay-2 { transition-delay: 0.16s !important; }
+.v-delay-3 { transition-delay: 0.24s !important; }
+.v-delay-4 { transition-delay: 0.32s !important; }
+.v-delay-5 { transition-delay: 0.40s !important; }
+.v-delay-6 { transition-delay: 0.48s !important; }
+
+/* ── Hero kirish animatsiyasi ── */
+@keyframes vHeroTitle {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes vHeroBadge {
+  from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes vHeroButtons {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes vHeroSubtitle {
+  from { opacity: 0; }
+  to   { opacity: 0.7; }
+}
+
+.hero-badge-anim   { animation: vHeroBadge   0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both; }
+.hero-title-anim   { animation: vHeroTitle   0.7s cubic-bezier(0.22,1,0.36,1) 0.25s both; }
+.hero-sub-anim     { animation: vHeroSubtitle 0.6s ease 0.45s both; }
+.hero-btns-anim    { animation: vHeroButtons  0.6s cubic-bezier(0.22,1,0.36,1) 0.55s both; }
+
+/* ── Stat raqam puls ── */
+@keyframes vStatPop {
+  0%   { transform: scale(0.7); opacity: 0; }
+  70%  { transform: scale(1.06); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.stat-pop { animation: vStatPop 0.6s cubic-bezier(0.22,1,0.36,1) both; }
+
+/* ── Navbar hover link underline ── */
+.nav-link-animated {
+  position: relative;
+}
+.nav-link-animated::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 100%; height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s cubic-bezier(0.22,1,0.36,1);
+}
+.nav-link-animated:hover::after,
+.nav-link-animated.active::after { transform: scaleX(1); }
+
+/* ── Card hover lift (DrugCard, FeatureCard, team) ── */
+.card-lift {
+  transition: transform 0.28s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.28s cubic-bezier(0.22,1,0.36,1),
+              border-color 0.2s !important;
+}
+.card-lift:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: var(--shadow-lg) !important;
+  border-color: rgba(59,130,246,0.25) !important;
+}
+
+/* ── DrugCard rasm zoom ── */
+.drug-img-wrap {
+  overflow: hidden;
+}
+.drug-img-wrap img,
+.drug-img-wrap svg {
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+}
+.drug-img-wrap:hover img,
+.drug-img-wrap:hover svg {
+  transform: scale(1.07);
+}
+
+/* ── Cert card shimmer hover ── */
+.cert-card-anim {
+  position: relative;
+  overflow: hidden;
+  transition: background 0.25s, border-color 0.25s, transform 0.3s cubic-bezier(0.22,1,0.36,1) !important;
+}
+.cert-card-anim:hover {
+  transform: translateY(-4px) !important;
+  background: rgba(255,255,255,0.12) !important;
+  border-color: rgba(255,255,255,0.22) !important;
+}
+.cert-card-anim::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.07) 50%, transparent 70%);
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.cert-card-anim:hover::after {
+  opacity: 1;
+  animation: certShimmer 0.7s ease forwards;
+}
+@keyframes certShimmer {
+  from { background-position: -100% 0; }
+  to   { background-position: 200% 0; }
+}
+
+/* ── Filter tab seçim animatsiyasi ── */
+.filter-tab {
+  transition: all 0.2s cubic-bezier(0.22,1,0.36,1) !important;
+}
+.filter-tab:hover {
+  transform: translateY(-1px);
+}
+.filter-tab.active {
+  transform: translateY(-1px);
+}
+
+/* ── Button ripple / press ── */
+.btn {
+  transition: all 0.2s cubic-bezier(0.22,1,0.36,1) !important;
+}
+.btn:active {
+  transform: scale(0.96) translateY(0px) !important;
+}
+
+/* ── Sahifalararo o'tish (page transition) ── */
+@keyframes vPageIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-enter {
+  animation: vPageIn 0.45s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+/* ── Timeline dot bounce ── */
+@keyframes vDotBounce {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.35); }
+}
+.timeline-dot-anim {
+  animation: vDotBounce 0.5s ease both;
+}
+
+/* ── Footer link hover ── */
+.footer-link-anim {
+  transition: color 0.2s, transform 0.2s !important;
+  display: inline-block;
+}
+.footer-link-anim:hover {
+  color: white !important;
+  transform: translateX(4px);
+}
+
+/* ── Social icon hover ── */
+.social-icon-anim {
+  transition: background 0.2s, transform 0.25s cubic-bezier(0.22,1,0.36,1) !important;
+}
+.social-icon-anim:hover {
+  background: rgba(255,255,255,0.15) !important;
+  transform: translateY(-3px) scale(1.1);
+}
+
+/* ── Input focus glow ── */
+.input {
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s !important;
+}
+
+/* ── Contact card hover ── */
+.contact-card-anim {
+  transition: transform 0.28s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.28s !important;
+}
+.contact-card-anim:hover {
+  transform: translateX(5px);
+  box-shadow: var(--shadow) !important;
+}
+
+/* ── Scroll-to-top smooth ── */
+html { scroll-behavior: smooth; }
+
+/* ── Accessibility: prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .v-hidden, .v-hidden-left, .v-hidden-right, .v-hidden-scale {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

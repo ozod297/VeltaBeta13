@@ -1,0 +1,6 @@
+.vercel
+.env*
+!.env.example
+original-assets/
+node_modules
+dist
